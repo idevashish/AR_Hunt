@@ -22,15 +22,28 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
 
 class MapViewController: UIViewController {
 
   @IBOutlet weak var mapView: MKMapView!
+  var targets = [ARItem]()
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
     mapView.userTrackingMode = MKUserTrackingMode.followWithHeading
+  }
+  
+  func setupLocations() {
+    let firstTarget = ARItem(itemDescription: "wolf", location: CLLocation(latitude: 0, longitude: 0))
+    targets.append(firstTarget)
+    
+    let secondTarget = ARItem(itemDescription: "wolf", location: CLLocation(latitude: 0, longitude: 0))
+    targets.append(secondTarget)
+    
+    let thirdTarget = ARItem(itemDescription: "wolf", location: CLLocation(latitude: 0, longitude: 0))
+    targets.append(thirdTarget)
   }
 }
