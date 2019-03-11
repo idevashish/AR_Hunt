@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7449FABC22371BD800CCF896 /* MapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7449FABB22371BD800CCF896 /* MapAnnotation.swift */; };
 		74B098362230B12300A00E5D /* ARItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B098352230B12300A00E5D /* ARItem.swift */; };
 		8FB21D7B1E13C34900B3E330 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB21D7A1E13C34900B3E330 /* AppDelegate.swift */; };
 		8FB21D7D1E13C34900B3E330 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB21D7C1E13C34900B3E330 /* ViewController.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7449FABB22371BD800CCF896 /* MapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotation.swift; sourceTree = "<group>"; };
 		74B098352230B12300A00E5D /* ARItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARItem.swift; sourceTree = "<group>"; };
 		8FB21D771E13C34900B3E330 /* AR_Hunt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AR_Hunt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FB21D7A1E13C34900B3E330 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 				8FB21D951E13DEA200B3E330 /* spark.png */,
 				8FB21D861E13C34900B3E330 /* Info.plist */,
 				74B098352230B12300A00E5D /* ARItem.swift */,
+				7449FABB22371BD800CCF896 /* MapAnnotation.swift */,
 			);
 			path = AR_Hunt;
 			sourceTree = "<group>";
@@ -157,6 +160,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8FB21D7D1E13C34900B3E330 /* ViewController.swift in Sources */,
+				7449FABC22371BD800CCF896 /* MapAnnotation.swift in Sources */,
 				74B098362230B12300A00E5D /* ARItem.swift in Sources */,
 				8FB21D8F1E13C39F00B3E330 /* MapViewController.swift in Sources */,
 				8FB21D7B1E13C34900B3E330 /* AppDelegate.swift in Sources */,

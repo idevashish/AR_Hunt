@@ -29,14 +29,21 @@ class MapViewController: UIViewController {
 
   @IBOutlet weak var mapView: MKMapView!
   var targets = [ARItem]()
+  let locationManager = CLLocationManager()
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
     mapView.userTrackingMode = MKUserTrackingMode.followWithHeading
+    setupLocations()
+    
+    if CLLocationManager.authorizationStatus() == .notDetermined {
+      locationManager.requestWhenInUseAuthorization()
+    }
   }
   
   func setupLocations() {
+    // Change locations to test
     let firstTarget = ARItem(itemDescription: "wolf", location: CLLocation(latitude: 0, longitude: 0))
     targets.append(firstTarget)
     
@@ -45,5 +52,10 @@ class MapViewController: UIViewController {
     
     let thirdTarget = ARItem(itemDescription: "wolf", location: CLLocation(latitude: 0, longitude: 0))
     targets.append(thirdTarget)
+    
+    for item in targets {
+      let annotation = MapAnnotation(location: item.location.coordinate, item: item)
+      self.mapView.addAnnotation(annotation)
+    }
   }
 }
