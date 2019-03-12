@@ -30,6 +30,7 @@ class MapViewController: UIViewController {
   @IBOutlet weak var mapView: MKMapView!
   var targets = [ARItem]()
   let locationManager = CLLocationManager()
+  var userLocation: CLLocation?
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -56,6 +57,26 @@ class MapViewController: UIViewController {
     for item in targets {
       let annotation = MapAnnotation(location: item.location.coordinate, item: item)
       self.mapView.addAnnotation(annotation)
+    }
+  }
+}
+
+extension MapViewController: MKMapViewDelegate {
+  func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+    self.userLocation = userLocation.location
+  }
+  
+  func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+    let coordinate = view.annotation!.coordinate
+    if let userCoordinate  = userLocation {
+      if userCoordinate.distance(from: CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)) < 50 {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let viewController = storyboard.instantiateViewController(withIdentifier: "ARViewController") as? ViewController {
+          if let mapAnnotation = view.annotation as? MapAnnotation {
+            self.present(viewController, animated: true, completion: nil)
+          }
+        }
+      }
     }
   }
 }
