@@ -45,13 +45,13 @@ class MapViewController: UIViewController {
   
   func setupLocations() {
     // Change locations to test
-    let firstTarget = ARItem(itemDescription: "wolf", location: CLLocation(latitude: 0, longitude: 0))
+    let firstTarget = ARItem(itemDescription: "wolf", location: CLLocation(latitude: 0, longitude: 0), itemNode: nil)
     targets.append(firstTarget)
     
-    let secondTarget = ARItem(itemDescription: "wolf", location: CLLocation(latitude: 0, longitude: 0))
+    let secondTarget = ARItem(itemDescription: "wolf", location: CLLocation(latitude: 0, longitude: 0), itemNode: nil)
     targets.append(secondTarget)
     
-    let thirdTarget = ARItem(itemDescription: "wolf", location: CLLocation(latitude: 0, longitude: 0))
+    let thirdTarget = ARItem(itemDescription: "wolf", location: CLLocation(latitude: 0, longitude: 0), itemNode: nil)
     targets.append(thirdTarget)
     
     for item in targets {
@@ -73,6 +73,8 @@ extension MapViewController: MKMapViewDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let viewController = storyboard.instantiateViewController(withIdentifier: "ARViewController") as? ViewController {
           if let mapAnnotation = view.annotation as? MapAnnotation {
+            viewController.target = mapAnnotation.item
+            viewController.userLocation = mapView.userLocation.location!
             self.present(viewController, animated: true, completion: nil)
           }
         }
