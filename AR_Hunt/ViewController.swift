@@ -158,8 +158,39 @@ class ViewController: UIViewController {
   }
   
   func setupTarget() {
-    targetNode.name = "enemy"
-    self.target.itemNode = targetNode
+    let scene = SCNScene(named: "art.scnassets/\(target.itemDescription).dae")
+    let enemy = scene?.rootNode.childNode(withName: target.itemDescription, recursively: true)
+    
+    if target.itemDescription == "dragon" {
+      enemy?.position = SCNVector3(x: 0, y: -15, z: 0)
+    } else {
+      enemy?.position = SCNVector3(x: 0, y: 0, z: 0)
+    }
+    
+    let node = SCNNode()
+    node.addChildNode(enemy!)
+    node.name = "enemy"
+    self.target.itemNode = node
+  }
+  
+  override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    let touch = touches.first!
+    let location = touch.location(in: sceneView)
+    let hitResult = sceneView.hitTest(location, options: nil)
+    let fireBall = SCNParticleSystem(named: "Fireball.cnp", inDirectory: nil)
+    
+    let emitterNode = SCNNode()
+    emitterNode.position = SCNVector3(0, -5, 10)
+    emitterNode.addParticleSystem(fireBall!)
+    scene.rootNode.addChildNode(emitterNode)
+    
+    if hitResult.first != nil {
+      target.itemNode?.runAction(SCNAction.sequence([SCNAction.wait(duration: 0.5), SCNAction.removeFromParentNode(), SCNAction.hide()]))
+      let moveAction = SCNAction.move(to: target.itemNode!.position, duration: 0.5)
+      emitterNode.runAction(moveAction)
+    } else {
+      emitterNode.runAction(SCNAction.move(to: SCNVector3(0, 0, -30), duration: 0.5))
+    }
   }
 }
 
