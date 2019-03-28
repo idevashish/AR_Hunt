@@ -31,6 +31,7 @@ class MapViewController: UIViewController {
   var targets = [ARItem]()
   let locationManager = CLLocationManager()
   var userLocation: CLLocation?
+  var selectedAnnotation: MKAnnotation?
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -72,13 +73,26 @@ extension MapViewController: MKMapViewDelegate {
       if userCoordinate.distance(from: CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)) < 50 {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let viewController = storyboard.instantiateViewController(withIdentifier: "ARViewController") as? ViewController {
+          viewController.delegate = self
           if let mapAnnotation = view.annotation as? MapAnnotation {
             viewController.target = mapAnnotation.item
             viewController.userLocation = mapView.userLocation.location!
+            selectedAnnotation = view.annotation
             self.present(viewController, animated: true, completion: nil)
           }
         }
       }
+    }
+  }
+}
+
+extension MapViewController: ARControllerDelegate {
+  func viewController(controller: ViewController, tappedTarget: ARItem) {
+    self.dismiss(animated: true, completion: nil)
+    let index = self.targets.index(where: {$0.itemDescription == tappedTarget.itemDescription})
+    self.targets.remove(at: index!)
+    if selectedAnnotation != nil {
+      mapView.removeAnnotation(selectedAnnotation!)
     }
   }
 }

@@ -25,6 +25,10 @@ import SceneKit
 import AVFoundation
 import CoreLocation
 
+protocol ARControllerDelegate {
+  func viewController(controller: ViewController, tappedTarget: ARItem)
+}
+
 class ViewController: UIViewController {
   
   @IBOutlet weak var sceneView: SCNView!
@@ -39,6 +43,7 @@ class ViewController: UIViewController {
   let scene = SCNScene()
   let cameraNode = SCNNode()
   let targetNode = SCNNode(geometry: SCNCapsule(capRadius: 1, height: 2))
+  var delegate: ARControllerDelegate?
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -184,8 +189,13 @@ class ViewController: UIViewController {
     
     if hitResult.first != nil {
       target.itemNode?.runAction(SCNAction.sequence([SCNAction.wait(duration: 0.5), SCNAction.removeFromParentNode(), SCNAction.hide()]))
-      let moveAction = SCNAction.move(to: target.itemNode!.position, duration: 0.5)
-      emitterNode.runAction(moveAction)
+      let sequence = SCNAction.sequence([
+          SCNAction.move(to: target.itemNode!.position, duration: 0.5),
+          SCNAction.wait(duration: 3.5),
+          SCNAction.run({ _ in
+            self.delegate?.viewController(controller: self, tappedTarget: self.target)
+          })
+        ])
     } else {
       emitterNode.runAction(SCNAction.move(to: SCNVector3(0, 0, -30), duration: 0.5))
     }
