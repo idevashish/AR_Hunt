@@ -63,12 +63,11 @@ class ViewController: UIViewController {
   func createCaptureSession() -> (session: AVCaptureSession?, error: NSError?) {
     var error: NSError?
     var captureSession: AVCaptureSession?
-    let backVideoDevice = AVCaptureDevice.defaultDevice(withDeviceType: .builtInWideAngleCamera, mediaType: AVMediaTypeVideo, position: .back)
-    
+    let backVideoDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .back)
     if backVideoDevice != nil {
       var videoInput: AVCaptureDeviceInput!
       do {
-        videoInput = try AVCaptureDeviceInput(device: backVideoDevice)
+        videoInput = try AVCaptureDeviceInput(device: backVideoDevice!)
       } catch let err as NSError {
         error = err
         videoInput = nil
@@ -98,13 +97,12 @@ class ViewController: UIViewController {
     }
     self.cameraSession = session
     
-    if let cameraLayer = AVCaptureVideoPreviewLayer(session: self.cameraSession) {
-      cameraLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
-      cameraLayer.frame = self.view.bounds
-      
-      self.view.layer.insertSublayer(cameraLayer, at: 0)
-      self.cameraLayer = cameraLayer
-    }
+    let cameraLayer = AVCaptureVideoPreviewLayer(session: self.cameraSession!)
+    cameraLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+    cameraLayer.frame = self.view.bounds
+    
+    self.view.layer.insertSublayer(cameraLayer, at: 0)
+    self.cameraLayer = cameraLayer
   }
   
   func repositionTarget() {
